@@ -1,0 +1,43 @@
+#mc_embed_signup {
+  padding: 0;
+  input {
+    height: 2.5rem;
+  }
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#body {
+  background: $white;
+  position: fixed;
+}
+#bg {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: $primary-color;
+  z-index: -9999;
+  top: 0;
+}
+
+h1 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+input[type=email] {
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  padding-left: 3rem;
+  padding-top: .5rem;
+}
+
+#label-email {
+  width: 1px;
+  display: inline-block;
+  position: absolute;
+  padding-top: .5rem;
+}
