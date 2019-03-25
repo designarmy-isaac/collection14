@@ -73,13 +73,17 @@ const float R0B = ' + (90/255) + ';\n\
 const float G0B = ' + (130/255) + ';\n\
 const float B0B = ' + (174/255) + ';\n\
 \n\
+const float R0C = ' + (254/255) + ';\n\
+const float G0C = ' + (254/255) + ';\n\
+const float B0C = ' + (254/255) + ';\n\
+\n\
 const float R1A = ' + (95/255) + ';\n\
 const float G1A = ' + (201/255) + ';\n\
 const float B1A = ' + (144/255) + ';\n\
 \n\
-const float R1B = ' + (100/255) + ';\n\
-const float G1B = ' + (179/255) + ';\n\
-const float B1B = ' + (240/255) + ';\n\
+const float R1B = ' + (254/255) + ';\n\
+const float G1B = ' + (60/255) + ';\n\
+const float B1B = ' + (60/255) + ';\n\
 \n\
 const float R2A = ' + (203/255) + ';\n\
 const float G2A = ' + (31/255) + ';\n\
@@ -89,7 +93,7 @@ const float R2B = ' + (226/255) + ';\n\
 const float G2B = ' + (163/255) + ';\n\
 const float B2B = ' + (157/255) + ';\n\
 \n\
-const float R3A = ' + (200/255) + ';\n\
+const float R3A = ' + (254/255) + ';\n\
 const float G3A = ' + (50/255) + ';\n\
 const float B3A = ' + (30/255) + ';\n\
 \n\
@@ -133,13 +137,13 @@ void main(){\n\
         v3 += r*r/(dx*dx + dy*dy);\n\
     }\n\
     if (v0 > 1.0) {\n\
-        gl_FragColor = vec4( (R0A + (x/WIDTH) * (R0B - R0A)), (G0A + (x/WIDTH) * (G0B - G0A)), (B0A + (x/WIDTH) * (B0B - B0A)), 1.0);\n\
+        gl_FragColor = vec4( (R0A + .5 * (y/HEIGHT + x/WIDTH) * (R0B - R0A)), (G0A + .5 * (y/HEIGHT + x/WIDTH) * (G0B - G0A)), (B0A + .5 * (y/HEIGHT + x/WIDTH) * (B0B - B0A)), 1.0);\n\
     } else if (v1 > 1.0) {\n\
-        gl_FragColor = vec4( (R1A + (x/WIDTH) * (R1B - R1A)), (G1A + (x/WIDTH) * (G1B - G1A)), (B1A + (x/WIDTH) * (B1B - B1A)), 1.0);\n\
+        gl_FragColor = vec4( (R1A + .5 * (y/HEIGHT + x/WIDTH) * (R1B - R1A)), (G1A + .5 * (y/HEIGHT + x/WIDTH) * (G1B - G1A)), (B1A + .5 * (y/HEIGHT + x/WIDTH) * (B1B - B1A)), 1.0);\n\
     } else if (v2 > 1.0) {\n\
-        gl_FragColor = vec4( (R2A + (x/WIDTH) * (R2B - R2A)), (G2A + (x/WIDTH) * (G2B - G2A)), (B2A + (x/WIDTH) * (B2B - B2A)), 1.0);\n\
+        gl_FragColor = vec4( (R2A + .5 * (y/HEIGHT + x/WIDTH) * (R2B - R2A)), (G2A + .5 * (y/HEIGHT + x/WIDTH) * (G2B - G2A)), (B2A + .5 * (y/HEIGHT + x/WIDTH) * (B2B - B2A)), 1.0);\n\
     } else if (v3 > 1.0) {\n\
-        gl_FragColor = vec4( (R3A + (x/WIDTH) * (R3B - R3A)), (G3A + (x/WIDTH) * (G3B - G3A)), (B3A + (x/WIDTH) * (B3B - B3A)), 1.0);\n\
+        gl_FragColor = vec4( (R3A + .5 * (y/HEIGHT + x/WIDTH) * (R3B - R3A)), (G3A + .5 * (y/HEIGHT + x/WIDTH) * (G3B - G3A)), (B3A + .5 * (y/HEIGHT + x/WIDTH) * (B3B - B3A)), 1.0);\n\
     } else {\n\
         gl_FragColor = vec4(1.0, 1.0, 1.0, 0);\n\
     }\n\
@@ -218,8 +222,8 @@ for (var i = 0; i < NUM_METABALLS; i++) {
   metaballs.push({
     x: random(0, WIDTH),
     y: random(0, HEIGHT),
-    vx: (random(-5, 5) / 15),
-    vy: (random(-5, 5) / 15),
+    vx: (random(-5, 5) / 25),
+    vy: (random(-5, 5) / 20),
     r: radius
   });
 }
