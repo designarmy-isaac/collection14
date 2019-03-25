@@ -31,7 +31,9 @@ h1 {
   margin-bottom: 0;
 }
 
-input[type=email] {
+input[type=email],
+input[type=email]:active, 
+input[type=email]:focus {
   border-top: none;
   border-right: none;
   border-left: none;
