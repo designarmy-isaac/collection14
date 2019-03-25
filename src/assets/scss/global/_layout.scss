@@ -12,6 +12,10 @@ body {
 #body {
   background: $white;
   position: fixed;
+  width: 100%;
+  top: 0;
+  right: 0;
+  left: 0;
 }
 #bg {
   height: 100%;

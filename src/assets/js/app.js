@@ -22,7 +22,7 @@ function initPage() {
 
 var canvas = document.getElementById("bg"),
     gl = canvas.getContext('webgl'),
-    NUM_METABALLS = 10,
+    NUM_METABALLS = 25,
     WIDTH = canvas.width = window.innerWidth,
     HEIGHT = canvas.height = window.innerHeight;
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -62,24 +62,84 @@ void main() {\n\
 
 var fragmentShader = compileShader('\n\
 precision highp float;\n\
-uniform vec3 metaballsOne[' + NUM_METABALLS + '];\n\
+uniform vec3 metaballs[' + NUM_METABALLS + '];\n\
 const float WIDTH = ' + WIDTH + '.0;\n\
 const float HEIGHT = ' + HEIGHT + '.0;\n\
+const float R0A = ' + (204/255) + ';\n\
+const float G0A = ' + (29/255) + ';\n\
+const float B0A = ' + (122/255) + ';\n\
+\n\
+const float R0B = ' + (90/255) + ';\n\
+const float G0B = ' + (130/255) + ';\n\
+const float B0B = ' + (174/255) + ';\n\
+\n\
+const float R1A = ' + (95/255) + ';\n\
+const float G1A = ' + (201/255) + ';\n\
+const float B1A = ' + (144/255) + ';\n\
+\n\
+const float R1B = ' + (100/255) + ';\n\
+const float G1B = ' + (179/255) + ';\n\
+const float B1B = ' + (240/255) + ';\n\
+\n\
+const float R2A = ' + (203/255) + ';\n\
+const float G2A = ' + (31/255) + ';\n\
+const float B2A = ' + (122/255) + ';\n\
+\n\
+const float R2B = ' + (226/255) + ';\n\
+const float G2B = ' + (163/255) + ';\n\
+const float B2B = ' + (157/255) + ';\n\
+\n\
+const float R3A = ' + (200/255) + ';\n\
+const float G3A = ' + (50/255) + ';\n\
+const float B3A = ' + (30/255) + ';\n\
+\n\
+const float R3B = ' + (254/255) + ';\n\
+const float G3B = ' + (246/255) + ';\n\
+const float B3B = ' + (201/255) + ';\n\
 \n\
 void main(){\n\
     float x = gl_FragCoord.x;\n\
     float y = gl_FragCoord.y;\n\
-    float v = 0.0;\n\
-    for (int i = 0; i < ' + NUM_METABALLS + '; i++) {\n\
-        vec3 mb = metaballsOne[i];\n\
+    float v0 = 0.0;\n\
+    float v1 = 0.0;\n\
+    float v2 = 0.0;\n\
+    float v3 = 0.0;\n\
+    for (int i = 0; i < 3; i++) {\n\
+        vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
-        v += r*r/(dx*dx + dy*dy);\n\
+        v0 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    if (v > 1.0) {\n\
-        gl_FragColor = vec4(1.0, x/WIDTH,\n\
-                                y/HEIGHT, 1.0);\n\
+    for (int i = 3; i < 7; i++) {\n\
+        vec3 mb = metaballs[i];\n\
+        float dx = mb.x - x;\n\
+        float dy = mb.y - y;\n\
+        float r = mb.z;\n\
+        v1 += r*r/(dx*dx + dy*dy);\n\
+    }\n\
+    for (int i = 7; i < 17; i++) {\n\
+        vec3 mb = metaballs[i];\n\
+        float dx = mb.x - x;\n\
+        float dy = mb.y - y;\n\
+        float r = mb.z;\n\
+        v2 += r*r/(dx*dx + dy*dy);\n\
+    }\n\
+    for (int i = 17; i <= ' + NUM_METABALLS + '; i++) {\n\
+        vec3 mb = metaballs[i];\n\
+        float dx = mb.x - x;\n\
+        float dy = mb.y - y;\n\
+        float r = mb.z;\n\
+        v3 += r*r/(dx*dx + dy*dy);\n\
+    }\n\
+    if (v0 > 1.0) {\n\
+        gl_FragColor = vec4( (R0A + (x/WIDTH) * (R0B - R0A)), (G0A + (x/WIDTH) * (G0B - G0A)), (B0A + (x/WIDTH) * (B0B - B0A)), 1.0);\n\
+    } else if (v1 > 1.0) {\n\
+        gl_FragColor = vec4( (R1A + (x/WIDTH) * (R1B - R1A)), (G1A + (x/WIDTH) * (G1B - G1A)), (B1A + (x/WIDTH) * (B1B - B1A)), 1.0);\n\
+    } else if (v2 > 1.0) {\n\
+        gl_FragColor = vec4( (R2A + (x/WIDTH) * (R2B - R2A)), (G2A + (x/WIDTH) * (G2B - G2A)), (B2A + (x/WIDTH) * (B2B - B2A)), 1.0);\n\
+    } else if (v3 > 1.0) {\n\
+        gl_FragColor = vec4( (R3A + (x/WIDTH) * (R3B - R3A)), (G3A + (x/WIDTH) * (G3B - G3A)), (B3A + (x/WIDTH) * (B3B - B3A)), 1.0);\n\
     } else {\n\
         gl_FragColor = vec4(1.0, 1.0, 1.0, 0);\n\
     }\n\
@@ -147,31 +207,20 @@ gl.vertexAttribPointer(positionHandle,
  * Simulation setup
  */
 
-var metaballsOne = [],
-    metaballsTwo = [];
+var metaballs = [];
 
 function random(min, max) {
   return Math.floor(Math.random() * (max - min) ) + min;
 }
 
 for (var i = 0; i < NUM_METABALLS; i++) {
-  var radiusOne = random(20, Math.sqrt(HEIGHT * WIDTH) / 7);
-  metaballsOne.push({
+  var radius = random(15, Math.sqrt(HEIGHT * WIDTH) / 7);
+  metaballs.push({
     x: random(0, WIDTH),
     y: random(0, HEIGHT),
-    vx: random(-1, 1),
-    vy: random(-1, 1),
-    r: radiusOne
-  });
-}
-for (var j = 0; j < NUM_METABALLS; j++) {
-  var radiusTwo = Math.random() * 100 + 10;
-  metaballsTwo.push({
-    x: random(0, WIDTH),
-    y: random(0, HEIGHT),
-    vx: random(-1, 1),
-    vy: random(-1, 1),
-    r: radiusTwo
+    vx: (random(-5, 5) / 15),
+    vy: (random(-5, 5) / 15),
+    r: radius
   });
 }
 
@@ -187,7 +236,7 @@ function getUniformLocation(program, name) {
     }
     return uniformLocation;
 }
-var metaballsHandle = getUniformLocation(program, 'metaballsOne');
+var metaballsHandle = getUniformLocation(program, 'metaballs');
 
 /**
  * Simulation step, data transfer, and drawing
@@ -196,22 +245,22 @@ var metaballsHandle = getUniformLocation(program, 'metaballsOne');
 var step = function() {
   // Update positions and speeds
   for (var i = 0; i < NUM_METABALLS; i++) {
-    var mb = metaballsOne[i];
+    var mb = metaballs[i];
     
     mb.x += mb.vx;
-    if (mb.x - mb.r < 0) {
-      mb.x = mb.r + 1;
+    if (mb.x < 0) {
+//      mb.x = mb.r + 1;
       mb.vx = Math.abs(mb.vx);
-    } else if (mb.x + mb.r > WIDTH) {
-      mb.x = WIDTH - mb.r;
+    } else if (mb.x > WIDTH) {
+//      mb.x = WIDTH - mb.r;
       mb.vx = -Math.abs(mb.vx);
     }
     mb.y += mb.vy;
-    if (mb.y - mb.r < 0) {
-      mb.y = mb.r + 1;
+    if (mb.y < 0) {
+//      mb.y = mb.r + 1;
       mb.vy = Math.abs(mb.vy);
-    } else if (mb.y + mb.r > HEIGHT) {
-      mb.y = HEIGHT - mb.r;
+    } else if (mb.y > HEIGHT) {
+//      mb.y = HEIGHT - mb.r;
       mb.vy = -Math.abs(mb.vy);
     }
   }
@@ -219,12 +268,12 @@ var step = function() {
   // To send the data to the GPU, we first need to
   // flatten our data into a single array.
   var dataToSendToGPU = new Float32Array(3 * NUM_METABALLS);
-  for (var i = 0; i < NUM_METABALLS; i++) {
-    var baseIndex = 3 * i;
-    var mb = metaballsOne[i];
-    dataToSendToGPU[baseIndex + 0] = mb.x;
-    dataToSendToGPU[baseIndex + 1] = mb.y;
-    dataToSendToGPU[baseIndex + 2] = mb.r;
+  for (var j = 0; j < NUM_METABALLS; j++) {
+    var baseIndex = 3 * j;
+    var b = metaballs[j];
+    dataToSendToGPU[baseIndex + 0] = b.x;
+    dataToSendToGPU[baseIndex + 1] = b.y;
+    dataToSendToGPU[baseIndex + 2] = b.r;
   }
   gl.uniform3fv(metaballsHandle, dataToSendToGPU);
 
