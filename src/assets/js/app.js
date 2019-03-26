@@ -22,7 +22,7 @@ function initPage() {
 
 var canvas = document.getElementById("bg"),
     gl = canvas.getContext('webgl'),
-    NUM_METABALLS = 25,
+    NUM_METABALLS = 35,
     WIDTH = canvas.width = window.innerWidth,
     HEIGHT = canvas.height = window.innerHeight;
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -65,41 +65,53 @@ precision highp float;\n\
 uniform vec3 metaballs[' + NUM_METABALLS + '];\n\
 const float WIDTH = ' + WIDTH + '.0;\n\
 const float HEIGHT = ' + HEIGHT + '.0;\n\
-const float R0A = ' + (204/255) + ';\n\
-const float G0A = ' + (29/255) + ';\n\
-const float B0A = ' + (122/255) + ';\n\
+const float R0A = ' + (254/255) + ';\n\
+const float G0A = ' + (160/255) + ';\n\
+const float B0A = ' + (75/255) + ';\n\
 \n\
-const float R0B = ' + (90/255) + ';\n\
-const float G0B = ' + (130/255) + ';\n\
-const float B0B = ' + (174/255) + ';\n\
+const float R0B = ' + (245/255) + ';\n\
+const float G0B = ' + (1/255) + ';\n\
+const float B0B = ' + (130/255) + ';\n\
 \n\
-const float R0C = ' + (254/255) + ';\n\
-const float G0C = ' + (254/255) + ';\n\
+const float R0C = ' + (56/255) + ';\n\
+const float G0C = ' + (122/255) + ';\n\
 const float B0C = ' + (254/255) + ';\n\
 \n\
-const float R1A = ' + (95/255) + ';\n\
-const float G1A = ' + (201/255) + ';\n\
-const float B1A = ' + (144/255) + ';\n\
+const float R1A = ' + (254/255) + ';\n\
+const float G1A = ' + (67/255) + ';\n\
+const float B1A = ' + (57/255) + ';\n\
 \n\
-const float R1B = ' + (254/255) + ';\n\
-const float G1B = ' + (60/255) + ';\n\
-const float B1B = ' + (60/255) + ';\n\
+const float R1B = ' + (78/255) + ';\n\
+const float G1B = ' + (254/255) + ';\n\
+const float B1B = ' + (196/255) + ';\n\
 \n\
-const float R2A = ' + (203/255) + ';\n\
-const float G2A = ' + (31/255) + ';\n\
-const float B2A = ' + (122/255) + ';\n\
+const float R1C = ' + (227/255) + ';\n\
+const float G1C = ' + (254/255) + ';\n\
+const float B1C = ' + (138/255) + ';\n\
 \n\
-const float R2B = ' + (226/255) + ';\n\
-const float G2B = ' + (163/255) + ';\n\
-const float B2B = ' + (157/255) + ';\n\
+const float R2A = ' + (149/255) + ';\n\
+const float G2A = ' + (204/255) + ';\n\
+const float B2A = ' + (254/255) + ';\n\
+\n\
+const float R2B = ' + (100/255) + ';\n\
+const float G2B = ' + (70/255) + ';\n\
+const float B2B = ' + (150/255) + ';\n\
+\n\
+const float R2C = ' + (192/255) + ';\n\
+const float G2C = ' + (22/255) + ';\n\
+const float B2C = ' + (102/255) + ';\n\
 \n\
 const float R3A = ' + (254/255) + ';\n\
-const float G3A = ' + (50/255) + ';\n\
-const float B3A = ' + (30/255) + ';\n\
+const float G3A = ' + (231/255) + ';\n\
+const float B3A = ' + (184/255) + ';\n\
 \n\
 const float R3B = ' + (254/255) + ';\n\
-const float G3B = ' + (246/255) + ';\n\
-const float B3B = ' + (201/255) + ';\n\
+const float G3B = ' + (179/255) + ';\n\
+const float B3B = ' + (87/255) + ';\n\
+\n\
+const float R3C = ' + (254/255) + ';\n\
+const float G3C = ' + (75/255) + ';\n\
+const float B3C = ' + (71/255) + ';\n\
 \n\
 void main(){\n\
     float x = gl_FragCoord.x;\n\
@@ -108,42 +120,58 @@ void main(){\n\
     float v1 = 0.0;\n\
     float v2 = 0.0;\n\
     float v3 = 0.0;\n\
-    for (int i = 0; i < 3; i++) {\n\
+    for (int i = 0; i < 6; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v0 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    for (int i = 3; i < 7; i++) {\n\
+    for (int i = 6; i < 12; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v1 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    for (int i = 7; i < 17; i++) {\n\
+    for (int i = 12; i < 20; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v2 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    for (int i = 17; i <= ' + NUM_METABALLS + '; i++) {\n\
+    for (int i = 20; i <= ' + NUM_METABALLS + '; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v3 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    if (v0 > 1.0) {\n\
-        gl_FragColor = vec4( (R0A + .5 * (y/HEIGHT + x/WIDTH) * (R0B - R0A)), (G0A + .5 * (y/HEIGHT + x/WIDTH) * (G0B - G0A)), (B0A + .5 * (y/HEIGHT + x/WIDTH) * (B0B - B0A)), 1.0);\n\
-    } else if (v1 > 1.0) {\n\
-        gl_FragColor = vec4( (R1A + .5 * (y/HEIGHT + x/WIDTH) * (R1B - R1A)), (G1A + .5 * (y/HEIGHT + x/WIDTH) * (G1B - G1A)), (B1A + .5 * (y/HEIGHT + x/WIDTH) * (B1B - B1A)), 1.0);\n\
-    } else if (v2 > 1.0) {\n\
-        gl_FragColor = vec4( (R2A + .5 * (y/HEIGHT + x/WIDTH) * (R2B - R2A)), (G2A + .5 * (y/HEIGHT + x/WIDTH) * (G2B - G2A)), (B2A + .5 * (y/HEIGHT + x/WIDTH) * (B2B - B2A)), 1.0);\n\
-    } else if (v3 > 1.0) {\n\
-        gl_FragColor = vec4( (R3A + .5 * (y/HEIGHT + x/WIDTH) * (R3B - R3A)), (G3A + .5 * (y/HEIGHT + x/WIDTH) * (G3B - G3A)), (B3A + .5 * (y/HEIGHT + x/WIDTH) * (B3B - B3A)), 1.0);\n\
+    if (v0 > 0.75) {\n\
+      if ( (y/HEIGHT + x/WIDTH) > 1.0) {\n\
+        gl_FragColor = vec4( (R0A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (R0B - R0A)), (G0A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (G0B - G0A)), (B0A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (B0B - B0A)), 1.0);\n\
+      } else {\n\
+        gl_FragColor = vec4( (R0C + (y/HEIGHT + x/WIDTH) * (R0B - R0C)), (G0C + (y/HEIGHT + x/WIDTH) * (G0B - G0C)), (B0C + (y/HEIGHT + x/WIDTH) * (B0B - B0C)), 1.0);\n\
+      }\n\
+    } else if (v1 > 0.75) {\n\
+      if ( (((HEIGHT - y) / HEIGHT) + x/WIDTH) > 1.0) {\n\
+        gl_FragColor = vec4( (R1B + ((HEIGHT - y)/HEIGHT - (WIDTH - x)/WIDTH) * (R1A - R1B)), (G1B + ((HEIGHT - y)/HEIGHT - (WIDTH - x)/WIDTH) * (G1A - G1B)), (B1B + ((HEIGHT - y)/HEIGHT - (WIDTH - x)/WIDTH) * (B1A - B1B)), 1.0);\n\
+      } else {\n\
+        gl_FragColor = vec4( (R1B + (y/HEIGHT - x/WIDTH) * (R1C - R1B)), (G1B + (y/HEIGHT - x/WIDTH) * (G1C - G1B)), (B1B + (y/HEIGHT - x/WIDTH) * (B1C - B1B)), 1.0);\n\
+      }\n\
+    } else if (v2 > 0.75) {\n\
+      if ( (y/HEIGHT + x/WIDTH) > 1.0) {\n\
+        gl_FragColor = vec4( (R2A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (R2B - R2A)), (G2A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (G2B - G2A)), (B2A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (B2B - B2A)), 1.0);\n\
+      } else {\n\
+        gl_FragColor = vec4( (R2C + (y/HEIGHT + x/WIDTH) * (R2B - R2C)), (G2C + (y/HEIGHT + x/WIDTH) * (G2B - G2C)), (B2C + (y/HEIGHT + x/WIDTH) * (B2B - B2C)), 1.0);\n\
+      }\n\
+    } else if (v3 > 0.75) {\n\
+      if ( (y/HEIGHT + x/WIDTH) > 1.0) {\n\
+        gl_FragColor = vec4( (R3A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (R3B - R3A)), (G3A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (G3B - G3A)), (B3A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (B3B - B3A)), 1.0);\n\
+      } else {\n\
+        gl_FragColor = vec4( (R3C + (y/HEIGHT + x/WIDTH) * (R3B - R3C)), (G3C + (y/HEIGHT + x/WIDTH) * (G3B - G3C)), (B3C + (y/HEIGHT + x/WIDTH) * (B3B - B3C)), 1.0);\n\
+      }\n\
     } else {\n\
         gl_FragColor = vec4(1.0, 1.0, 1.0, 0);\n\
     }\n\
@@ -218,7 +246,8 @@ function random(min, max) {
 }
 
 for (var i = 0; i < NUM_METABALLS; i++) {
-  var radius = random(15, Math.sqrt(HEIGHT * WIDTH) / 7);
+  var sm = Math.sqrt(HEIGHT * WIDTH) / 20,
+  radius = random(sm * 0.8, sm * 2);
   metaballs.push({
     x: random(0, WIDTH),
     y: random(0, HEIGHT),
