@@ -61,7 +61,7 @@ void main() {\n\
 ', gl.VERTEX_SHADER);
 
 var fragmentShader = compileShader('\n\
-precision highp float;\n\
+precision mediump float;\n\
 uniform vec3 metaballs[' + NUM_METABALLS + '];\n\
 const float WIDTH = ' + WIDTH + '.0;\n\
 const float HEIGHT = ' + HEIGHT + '.0;\n\
