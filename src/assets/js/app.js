@@ -22,14 +22,14 @@ function initPage() {
 
 var canvas = document.getElementById("bg"),
     gl = canvas.getContext('webgl'),
-    NUM_METABALLS = 35,
+    NUM_METABALLS = 30,
     WIDTH = canvas.width = window.innerWidth,
-    HEIGHT = canvas.height = window.innerHeight;
+    HEIGHT = canvas.height = window.innerHeight - $('#body').height();
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 
   $(window).resize(function() {
     WIDTH = canvas.width = window.innerWidth,
-    HEIGHT = canvas.height = window.innerHeight;
+    HEIGHT = canvas.height = window.innerHeight - $('#body').height();
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
   });
     
@@ -65,53 +65,53 @@ precision highp float;\n\
 uniform vec3 metaballs[' + NUM_METABALLS + '];\n\
 const float WIDTH = ' + WIDTH + '.0;\n\
 const float HEIGHT = ' + HEIGHT + '.0;\n\
-const float R0A = ' + (254/255) + ';\n\
-const float G0A = ' + (160/255) + ';\n\
-const float B0A = ' + (75/255) + ';\n\
+const float R0A = ' + (252/255) + ';\n\
+const float G0A = ' + (154/255) + ';\n\
+const float B0A = ' + (112/255) + ';\n\
 \n\
-const float R0B = ' + (245/255) + ';\n\
-const float G0B = ' + (1/255) + ';\n\
-const float B0B = ' + (130/255) + ';\n\
+const float R0B = ' + (198/255) + ';\n\
+const float G0B = ' + (67/255) + ';\n\
+const float B0B = ' + (174/255) + ';\n\
 \n\
-const float R0C = ' + (56/255) + ';\n\
-const float G0C = ' + (122/255) + ';\n\
-const float B0C = ' + (254/255) + ';\n\
+const float R0C = ' + (49/255) + ';\n\
+const float G0C = ' + (52/255) + ';\n\
+const float B0C = ' + (145/255) + ';\n\
 \n\
-const float R1A = ' + (254/255) + ';\n\
-const float G1A = ' + (67/255) + ';\n\
-const float B1A = ' + (57/255) + ';\n\
+const float R1A = ' + (52/255) + ';\n\
+const float G1A = ' + (76/255) + ';\n\
+const float B1A = ' + (225/255) + ';\n\
 \n\
-const float R1B = ' + (78/255) + ';\n\
-const float G1B = ' + (254/255) + ';\n\
-const float B1B = ' + (196/255) + ';\n\
+const float R1B = ' + (40/255) + ';\n\
+const float G1B = ' + (169/255) + ';\n\
+const float B1B = ' + (225/255) + ';\n\
 \n\
-const float R1C = ' + (227/255) + ';\n\
-const float G1C = ' + (254/255) + ';\n\
-const float B1C = ' + (138/255) + ';\n\
+const float R1C = ' + (62/255) + ';\n\
+const float G1C = ' + (200/255) + ';\n\
+const float B1C = ' + (80/255) + ';\n\
 \n\
-const float R2A = ' + (149/255) + ';\n\
-const float G2A = ' + (204/255) + ';\n\
-const float B2A = ' + (254/255) + ';\n\
+const float R2A = ' + (254/255) + ';\n\
+const float G2A = ' + (162/255) + ';\n\
+const float B2A = ' + (156/255) + ';\n\
 \n\
-const float R2B = ' + (100/255) + ';\n\
-const float G2B = ' + (70/255) + ';\n\
-const float B2B = ' + (150/255) + ';\n\
+const float R2B = ' + (175/255) + ';\n\
+const float G2B = ' + (40/255) + ';\n\
+const float B2B = ' + (110/255) + ';\n\
 \n\
-const float R2C = ' + (192/255) + ';\n\
-const float G2C = ' + (22/255) + ';\n\
-const float B2C = ' + (102/255) + ';\n\
+const float R2C = ' + (254/255) + ';\n\
+const float G2C = ' + (162/255) + ';\n\
+const float B2C = ' + (156/255) + ';\n\
 \n\
 const float R3A = ' + (254/255) + ';\n\
-const float G3A = ' + (231/255) + ';\n\
-const float B3A = ' + (184/255) + ';\n\
+const float G3A = ' + (245/255) + ';\n\
+const float B3A = ' + (214/255) + ';\n\
 \n\
 const float R3B = ' + (254/255) + ';\n\
-const float G3B = ' + (179/255) + ';\n\
-const float B3B = ' + (87/255) + ';\n\
+const float G3B = ' + (208/255) + ';\n\
+const float B3B = ' + (98/255) + ';\n\
 \n\
-const float R3C = ' + (254/255) + ';\n\
-const float G3C = ' + (75/255) + ';\n\
-const float B3C = ' + (71/255) + ';\n\
+const float R3C = ' + (239/255) + ';\n\
+const float G3C = ' + (62/255) + ';\n\
+const float B3C = ' + (54/255) + ';\n\
 \n\
 void main(){\n\
     float x = gl_FragCoord.x;\n\
@@ -120,28 +120,28 @@ void main(){\n\
     float v1 = 0.0;\n\
     float v2 = 0.0;\n\
     float v3 = 0.0;\n\
-    for (int i = 0; i < 6; i++) {\n\
+    for (int i = 0; i < 4; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v0 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    for (int i = 6; i < 12; i++) {\n\
+    for (int i = 4; i < 10; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v1 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    for (int i = 12; i < 20; i++) {\n\
+    for (int i = 10; i < 17; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
         float r = mb.z;\n\
         v2 += r*r/(dx*dx + dy*dy);\n\
     }\n\
-    for (int i = 20; i <= ' + NUM_METABALLS + '; i++) {\n\
+    for (int i = 17; i <= ' + NUM_METABALLS + '; i++) {\n\
         vec3 mb = metaballs[i];\n\
         float dx = mb.x - x;\n\
         float dy = mb.y - y;\n\
@@ -167,10 +167,10 @@ void main(){\n\
         gl_FragColor = vec4( (R2C + (y/HEIGHT + x/WIDTH) * (R2B - R2C)), (G2C + (y/HEIGHT + x/WIDTH) * (G2B - G2C)), (B2C + (y/HEIGHT + x/WIDTH) * (B2B - B2C)), 1.0);\n\
       }\n\
     } else if (v3 > 0.75) {\n\
-      if ( (y/HEIGHT + x/WIDTH) > 1.0) {\n\
-        gl_FragColor = vec4( (R3A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (R3B - R3A)), (G3A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (G3B - G3A)), (B3A + ((HEIGHT - y)/HEIGHT + (WIDTH - x)/WIDTH) * (B3B - B3A)), 1.0);\n\
+      if ( (x/WIDTH) < 0.5) {\n\
+        gl_FragColor = vec4( (R3A + (x/WIDTH) * 2.0 * (R3B - R3A)), (G3A + (x/WIDTH) * 2.0 * (G3B - G3A)), (B3A + (x/WIDTH) * 2.0 * (B3B - B3A)), 1.0);\n\
       } else {\n\
-        gl_FragColor = vec4( (R3C + (y/HEIGHT + x/WIDTH) * (R3B - R3C)), (G3C + (y/HEIGHT + x/WIDTH) * (G3B - G3C)), (B3C + (y/HEIGHT + x/WIDTH) * (B3B - B3C)), 1.0);\n\
+        gl_FragColor = vec4( (R3C + ((WIDTH - x)/WIDTH) * 2.0 * (R3B - R3C)), (G3C + ((WIDTH - x)/WIDTH) * 2.0 * (G3B - G3C)), (B3C + ((WIDTH - x)/WIDTH) * 2.0 * (B3B - B3C)), 1.0);\n\
       }\n\
     } else {\n\
         gl_FragColor = vec4(1.0, 1.0, 1.0, 0);\n\
@@ -246,7 +246,7 @@ function random(min, max) {
 }
 
 for (var i = 0; i < NUM_METABALLS; i++) {
-  var sm = Math.sqrt(HEIGHT * WIDTH) / 20,
+  var sm = Math.sqrt(HEIGHT * WIDTH) / 14,
   radius = random(sm * 0.8, sm * 2);
   metaballs.push({
     x: random(0, WIDTH),
